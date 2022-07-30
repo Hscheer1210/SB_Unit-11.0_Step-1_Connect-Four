@@ -64,43 +64,25 @@ function makeHtmlBoard() {
 }
 
 /** findSpotForCol: given column x, return top empty y (null if filled) */
-// HS: A - find the number of existing rows in each column (6) (6) (6)
-// HS: B - find the number of occupied rows in the column (0) (1) (2)
-// HS: C - find the index of the next available row in the column (0,5) (0,4) (0,3)
-// C = (A - 1) - B
-// let counter = 5;
+
 function findSpotForCol(x) {
   // TODO: write the real version of this, rather than always returning 0
+  // HS: A - find the number of existing rows in each column (6) (6) (6)
+  // HS: B - find the number of occupied rows in the column (0) (1) (2)
+  // HS: C - find the index of the next available row in the column (0,5) (0,4) (0,3)
+  // C = (A - 1) - B
   const numRows = 6;
   let fullRows = 0;
 
-  // let rowArray = [`${5}-${x}`,`${4}-${x}`,`${3}-${x}`,`${2}-${x}`,`${1}-${x}`,`${0}-${x}`,]
-
-  var lowCell5 = document.getElementById(`${5}-${x}`).hasChildNodes();
-  var lowCell4 = document.getElementById(`${4}-${x}`).hasChildNodes();
-  var lowCell3 = document.getElementById(`${3}-${x}`).hasChildNodes();
-  var lowCell2 = document.getElementById(`${2}-${x}`).hasChildNodes();
-  var lowCell1 = document.getElementById(`${1}-${x}`).hasChildNodes();
-  var lowCell0 = document.getElementById(`${0}-${x}`).hasChildNodes();
-
-  if (lowCell0 === true) {fullRows ++;}
-  if (lowCell1 === true) {fullRows ++;}
-  if (lowCell2 === true) {fullRows ++;}
-  if (lowCell3 === true) {fullRows ++;}
-  if (lowCell4 === true) {fullRows ++;}
-  if (lowCell5 === true) {fullRows ++;}
+  let rowArray = [`${5}-${x}`,`${4}-${x}`,`${3}-${x}`,`${2}-${x}`,`${1}-${x}`,`${0}-${x}`,]
+  for (let row of rowArray) {
+    var subRow = document.getElementById(row).hasChildNodes();
+    if (subRow === true) fullRows ++;
+  };
 
   let nextRow = (numRows - 1) - fullRows;
 
   return nextRow;
-  // if (lowCell.hasChildNodes()) {
-  //   //console.log("Hi");
-  //   return counter;
-  // } else {
-  //   counter --;
-  // }
-  // //console.log(counter);
-  // return counter;
 }
 
 /** placeInTable: update DOM to place piece into HTML table of board */
