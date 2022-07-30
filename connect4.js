@@ -66,7 +66,6 @@ function makeHtmlBoard() {
 /** findSpotForCol: given column x, return top empty y (null if filled) */
 
 function findSpotForCol(x) {
-  // TODO: write the real version of this, rather than always returning 0
   // HS: A - find the number of existing rows in each column (6) (6) (6)
   // HS: B - find the number of occupied rows in the column (0) (1) (2)
   // HS: C - find the index of the next available row in the column (0,5) (0,4) (0,3)
@@ -83,6 +82,17 @@ function findSpotForCol(x) {
   let nextRow = (numRows - 1) - fullRows;
 
   return nextRow;
+
+  // PS: Alternative solution:
+  // let counter = 5;
+  // var lowCell = document.getElementById(`${counter}-${x}`);
+
+  // while (lowCell.innerHTML != ''){
+  //   counter--; 
+  //   lowCell = document.getElementById(`${counter}-${x}`);
+  // }
+  
+  // return counter;
 }
 
 /** placeInTable: update DOM to place piece into HTML table of board */
@@ -129,6 +139,14 @@ function handleClick(evt) {
 
   // HS: switch currPlayer between 1 and 2 every time a click event happens
   currPlayer == 1 ? currPlayer = 2 : currPlayer = 1;
+  // currPlayer = (currPlayer == 1) ? 2 : 1; 
+  // could be written as : 
+  // if(currPlayer == 1){
+  //   currPlayer = 2
+  // }
+  // else {
+  //   currPlayer = 1
+  // }
 
   // check for win
   if (checkForWin()) {
