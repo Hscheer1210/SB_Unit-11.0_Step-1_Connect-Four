@@ -29,8 +29,8 @@ function makeBoard() {
      board.push([...newRow]);
      }
     // console.log(board);
-    //  board[0][0][2] = 5;
-    //  console.log(board);
+    // board[0][0][2] = 5;
+    // console.log(board);
   }
 
 /** makeHtmlBoard: make HTML table and row of column tops. */
@@ -69,7 +69,7 @@ function findSpotForCol(x) {
   // HS: A - find the number of existing rows in each column (6) (6) (6)
   // HS: B - find the number of occupied rows in the column (0) (1) (2)
   // HS: C - find the index of the next available row in the column (0,5) (0,4) (0,3)
-  // C = (A - 1) - B
+  // HS: Solve for C: C = (A - 1) - B
   const numRows = 6;
   let fullRows = 0;
 
@@ -83,10 +83,9 @@ function findSpotForCol(x) {
 
   return nextRow;
 
-  // PS: Alternative solution:
+  // HS: Alternative solution:
   // let counter = 5;
   // var lowCell = document.getElementById(`${counter}-${x}`);
-
   // while (lowCell.innerHTML != ''){
   //   counter--; 
   //   lowCell = document.getElementById(`${counter}-${x}`);
@@ -101,15 +100,16 @@ function placeInTable(y, x) {
   // TODO: make a div and insert into correct table cell
   // HS: create a new variable and assign it to whichever cell is clicked
   
-  var cell = document.getElementById(`${y}-${x}`);
-  // console.log(cell);
-  // HS: create a new div and add the piece class and a new class for the current player
-  // HS: append the new div to the cell that was clicked
-  const newDiv = document.createElement("div");
-  newDiv.classList.add("piece");
-  newDiv.classList.add('p' + currPlayer);
-  cell.append(newDiv);
-  //console.log(x,y);
+    var cell = document.getElementById(`${y}-${x}`);
+    
+      // HS: create a new div and add the piece class and a new class for the current player
+      // HS: append the new div to the cell that was clicked
+      const newDiv = document.createElement("div");
+      newDiv.classList.add("piece");
+      newDiv.classList.add('p' + currPlayer);
+      cell.append(newDiv);
+      //console.log(x,y);
+    
 }
 
 /** endGame: announce game end */
@@ -123,9 +123,7 @@ function endGame(msg) {
 function handleClick(evt) {
   // get x from ID of clicked cell
   var x = +evt.target.id;
-
   
-
   // get next spot in column (if none, ignore click)
   var y = findSpotForCol(x);
   //console.log(y);
@@ -139,6 +137,7 @@ function handleClick(evt) {
 
   // HS: switch currPlayer between 1 and 2 every time a click event happens
   currPlayer == 1 ? currPlayer = 2 : currPlayer = 1;
+  // HS: alt ternary function
   // currPlayer = (currPlayer == 1) ? 2 : 1; 
   // could be written as : 
   // if(currPlayer == 1){
@@ -147,6 +146,7 @@ function handleClick(evt) {
   // else {
   //   currPlayer = 1
   // }
+
 
   // check for win
   if (checkForWin()) {
@@ -159,6 +159,8 @@ function handleClick(evt) {
   // switch players
   // TODO: switch currPlayer 1 <-> 2
 }
+
+console.log(board);
 
 /** checkForWin: check board cell-by-cell for "does a win start here?" */
 
