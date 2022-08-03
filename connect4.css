@@ -20,11 +20,11 @@
 /* HS: add two new classes to use different colors for player 1 and player 2 */ 
 
 .p1 {
-  background-color: blue;
+  background-color: rgb(245, 235, 100);
 }
 
 .p2 {
-  background-color: red;
+  background-color: rgb(235, 90, 90);
 }
 
 /* TODO: make pieces red/blue,  depending on player 1/2 piece */
@@ -44,5 +44,5 @@
 }
 
 .win {
-  background-color: orange;
+  background-color: rgb(120, 175, 230);
 }
