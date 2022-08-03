@@ -211,7 +211,7 @@ function checkForWin() {
     }
   }
 }
-
+// HS: add a button to clear the board and restart the game
 function startOver () {
   window.location.reload();
 }

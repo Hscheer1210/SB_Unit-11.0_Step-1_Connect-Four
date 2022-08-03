@@ -38,3 +38,7 @@
 #column-top td:hover {
   background-color: gold;
 }
+
+#refresh {
+  margin-bottom: 1%;
+}
