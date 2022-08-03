@@ -17,7 +17,6 @@ let board = []; // array of rows, each row is array of cells  (board[y][x])
 
 function makeBoard() {
   // TODO: set "board" to empty HEIGHT x WIDTH matrix array
-
   // HS: Create an array for each row (6 total based on the value of the HEIGHT variable)
   let newRow = [];
   // HS: Use a for loop to iterate through the WIDTH variable and add an empty array to the newRow array with each increment of +1
@@ -85,7 +84,6 @@ function findSpotForCol(x) {
     return null;
   }
 
-
   // HS: Alternative solution:
   // let counter = 5;
   // let lowCell = document.getElementById(`${counter}-${x}`);
@@ -93,7 +91,6 @@ function findSpotForCol(x) {
   //   counter--; 
   //   lowCell = document.getElementById(`${counter}-${x}`);
   // }
-  
   // return counter;
 }
 
@@ -141,22 +138,27 @@ function handleClick(evt) {
   // check for win
 
   if (checkForWin()) {
-    return endGame(`Player ${currPlayer} won!`);
+    return endGame(`Player ${currPlayer} wins!`);
   } 
 
   // check for tie
   // TODO: check if all cells in board are filled; if so call, call endGame
-  // HS: call the checkForTie function (see below on line 160)
-  checkForTie();
+  // HS: call the checkForTie function to determine whether the board is full 
+  if (checkForTie()) {
+    return endGame(`This game is a tie!`);
+  } 
   
   // switch players
   // TODO: switch currPlayer 1 <-> 2
   // HS: switch currPlayer between 1 and 2 every time a click event happens
-  // currPlayer == 1 ? currPlayer = 2 : currPlayer = 1;
-  // HS: alt ternary function
   currPlayer = (currPlayer == 1) ? 2 : 1; 
 }
 
+// HS: create a function to check if the board is full (resulting in a tie)
+// HS: create a new set to use for verifying whether cells are full or empty (null)
+// HS: use a nested for loop to iterate through each cell on the board
+// HS: if the cell is null, add null to the set, otherwise add the cell coordinates to the set
+// HS: if the set includes null, return false (quick fail), otherwise alert that the board is full
 function checkForTie() {
   let fullCells = new Set();
 
@@ -172,7 +174,7 @@ function checkForTie() {
   if (fullCells.has(null)) {
     return false;
   } else {
-    alert("Board is full");
+    return true;
   }
 }
 
