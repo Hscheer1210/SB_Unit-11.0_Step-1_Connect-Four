@@ -205,12 +205,41 @@ function checkForWin() {
       let diagDR = [[y, x], [y + 1, x + 1], [y + 2, x + 2], [y + 3, x + 3]];
       let diagDL = [[y, x], [y + 1, x - 1], [y + 2, x - 2], [y + 3, x - 3]];
 
-      if (_win(horiz) || _win(vert) || _win(diagDR) || _win(diagDL)) {
+      // HS: this was the original code written.
+      // if (_win(horiz) || _win(vert) || _win(diagDR) || _win(diagDL)) {
+      //   return true;
+      // }
+
+      // HS: rewriting this part to implement the change color function 
+      if (_win(horiz)) {
+        changeColor(horiz);
+        return true;
+      }
+      if (_win(vert)) {
+        changeColor(vert);
+        return true;
+      }
+      if (_win(diagDR)) {
+        changeColor(diagDR);
+        return true;
+      }
+      if (_win(diagDL)) {
+        changeColor(diagDL);
         return true;
       }
     }
   }
 }
+
+
+// HS: add a function to highlight whichever cells are four in a row when a player wins
+function changeColor(input) {
+  for (let inny of input) {
+    let cell = document.getElementById(`${inny[0]}-${inny[1]}`);
+    cell.classList.add("win");
+  }
+}
+
 // HS: add a button to clear the board and restart the game
 function startOver () {
   window.location.reload();
