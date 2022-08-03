@@ -115,7 +115,7 @@ function placeInTable(y, x) {
 
 function endGame(msg) {
   // TODO: pop up alert message
-  alert(msg);
+  setTimeout(alert(msg),5000);
 }
 
 /** handleClick: handle click of column top to play piece */
@@ -212,5 +212,11 @@ function checkForWin() {
   }
 }
 
+function startOver () {
+  window.location.reload();
+}
+
 makeBoard();
 makeHtmlBoard();
+
+
