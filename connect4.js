@@ -152,7 +152,12 @@ function handleClick(evt) {
   // TODO: switch currPlayer 1 <-> 2
   // HS: switch currPlayer between 1 and 2 every time a click event happens
   currPlayer = (currPlayer == 1) ? 2 : 1; 
+
+  // HS: toggle the inner text in the h3 element to show which player's turn it is
+  document.querySelector('#turn').innerText = "Player " + currPlayer + "'s Turn"
 }
+
+
 
 // HS: create a function to check if the board is full (resulting in a tie)
 // HS: create a new set to use for verifying whether cells are full or empty (null)
@@ -213,18 +218,22 @@ function checkForWin() {
       // HS: rewriting this part to implement the change color function 
       if (_win(horiz)) {
         changeColor(horiz);
+        document.querySelector('#turn').innerText = "Player " + currPlayer + " Won!"
         return true;
       }
       if (_win(vert)) {
         changeColor(vert);
+        document.querySelector('#turn').innerText = "Player " + currPlayer + " Won!"
         return true;
       }
       if (_win(diagDR)) {
         changeColor(diagDR);
+        document.querySelector('#turn').innerText = "Player " + currPlayer + " Won!"
         return true;
       }
       if (_win(diagDL)) {
         changeColor(diagDL);
+        document.querySelector('#turn').innerText = "Player " + currPlayer + " Won!"
         return true;
       }
     }
