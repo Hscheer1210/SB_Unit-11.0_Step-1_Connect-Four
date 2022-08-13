@@ -113,10 +113,7 @@ function placeInTable(y, x) {
 
 /** endGame: announce game end */
 
-function endGame(msg) {
-  // TODO: pop up alert message
-  setTimeout(alert(msg),5000);
-}
+
 
 /** handleClick: handle click of column top to play piece */
 
@@ -228,6 +225,10 @@ function checkForWin() {
   }
 }
 
+function endGame(msg) {
+  // TODO: pop up alert message
+  setTimeout(function() {alert(msg)},500);
+}
 
 // HS: add a function to highlight whichever cells are four in a row when a player wins
 function changeColor(input) {
