@@ -25,9 +25,9 @@ function makeBoard() {
   }
   // HS: Use a for loop to iterate through the HEIGHT variable and add a newRow array to the board array with each increment of +1
   for (let j = 0; j < HEIGHT; j++) {
-     board.push([...newRow]);
-     }
+    board.push([...newRow]);
   }
+}
 
 /** makeHtmlBoard: make HTML table and row of column tops. */
 
@@ -70,16 +70,16 @@ function findSpotForCol(x) {
   let fullRows = 0;
 
   // this might create problems if the number of row changes. Refactor to use 'y' instead of integers
-  let rowArray = [`${5}-${x}`,`${4}-${x}`,`${3}-${x}`,`${2}-${x}`,`${1}-${x}`,`${0}-${x}`,]
+  let rowArray = [`${5}-${x}`, `${4}-${x}`, `${3}-${x}`, `${2}-${x}`, `${1}-${x}`, `${0}-${x}`,]
   for (let row of rowArray) {
     let subRow = document.getElementById(row).hasChildNodes();
-    if (subRow === true) fullRows ++;
+    if (subRow === true) fullRows++;
   };
 
   let nextRow = (numRows - 1) - fullRows;
-  
+
   if (nextRow >= 0) {
-  return nextRow;
+    return nextRow;
   } else {
     return null;
   }
@@ -94,21 +94,38 @@ function findSpotForCol(x) {
   // return counter;
 }
 
-/** placeInTable: update DOM to place piece into HTML table of board */
+async function sleep(ms = 100) {
+  return new Promise((resolve) => setTimeout(resolve, ms))
+}
 
+/** placeInTable: update DOM to place piece into HTML table of board */
 function placeInTable(y, x) {
-  // TODO: make a div and insert into correct table cell
-  // HS: create a new variable and assign it to whichever cell is clicked
+  const id = Math.random();
+
+  return new Promise(async (resolve, reject) => {
+    // TODO: make a div and insert into correct table cell
+    // HS: create a new variable and assign it to whichever cell is clicked
     let cell = document.getElementById(`${y}-${x}`);
-      // HS: create a new div and add the piece class and a new class for the current player
-      // HS: append the new div to the cell that was clicked
+    // HS: create a new div and add the piece class and a new class for the current player
+    // HS: append the new div to the cell that was clicked
     const newDiv = document.createElement("div");
     newDiv.classList.add("piece");
     newDiv.classList.add('p' + currPlayer);
+    newDiv.id = id;
     cell.append(newDiv);
 
     // HS: update in-memory board 
     board[y][x] = currPlayer;
+
+    const checkForNewDiv = () => !!document.getElementById(id)
+
+    while (!checkForNewDiv()) {
+      await sleep()
+    }
+
+    resolve();
+
+  })
 }
 
 /** endGame: announce game end */
@@ -117,10 +134,10 @@ function placeInTable(y, x) {
 
 /** handleClick: handle click of column top to play piece */
 
-function handleClick(evt) {
+async function handleClick(evt) {
   // get x from ID of clicked cell
   let x = +evt.target.id;
-  
+
   // get next spot in column (if none, ignore click)
   let y = findSpotForCol(x);
   if (y === null) {
@@ -129,26 +146,26 @@ function handleClick(evt) {
 
   // place piece in board and add to HTML table
   // TODO: add line to update in-memory board
-  placeInTable(y, x);
-  
+  await placeInTable(y, x);
+
 
   // check for win
 
   if (checkForWin()) {
     return endGame(`Player ${currPlayer} wins!`);
-  } 
+  }
 
   // check for tie
   // TODO: check if all cells in board are filled; if so call, call endGame
   // HS: call the checkForTie function to determine whether the board is full 
   if (checkForTie()) {
     return endGame(`This game is a tie!`);
-  } 
-  
+  }
+
   // switch players
   // TODO: switch currPlayer 1 <-> 2
   // HS: switch currPlayer between 1 and 2 every time a click event happens
-  currPlayer = (currPlayer == 1) ? 2 : 1; 
+  currPlayer = (currPlayer == 1) ? 2 : 1;
 
   // HS: toggle the inner text in the h3 element to show which player's turn it is
   document.querySelector('#turn').innerText = "Player " + currPlayer + "'s Turn"
@@ -169,7 +186,7 @@ function checkForTie() {
       if (board[y][x] == null) {
         fullCells.add(null);
       } else {
-        fullCells.add([y,x]);
+        fullCells.add([y, x]);
       }
     }
   }
@@ -187,7 +204,7 @@ function checkForWin() {
     // Check four cells to see if they're all color of current player
     //  - cells: list of four (y, x) cells
     //  - returns true if all are legal coordinates & all match currPlayer
-    
+
     return cells.every(
       ([y, x]) =>
         y >= 0 &&
@@ -227,7 +244,7 @@ function checkForWin() {
 
 function endGame(msg) {
   // TODO: pop up alert message
-  setTimeout(function() {alert(msg)},500);
+  setTimeout(() => alert(msg), 0);
 }
 
 // HS: add a function to highlight whichever cells are four in a row when a player wins
@@ -239,7 +256,7 @@ function changeColor(input) {
 }
 
 // HS: add a button to clear the board and restart the game
-function startOver () {
+function startOver() {
   window.location.reload();
 }
 
