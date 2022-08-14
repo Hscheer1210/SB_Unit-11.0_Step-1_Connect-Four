@@ -94,15 +94,8 @@ function findSpotForCol(x) {
   // return counter;
 }
 
-async function sleep(ms = 100) {
-  return new Promise((resolve) => setTimeout(resolve, ms))
-}
-
 /** placeInTable: update DOM to place piece into HTML table of board */
 function placeInTable(y, x) {
-  const id = Math.random();
-
-  return new Promise(async (resolve, reject) => {
     // TODO: make a div and insert into correct table cell
     // HS: create a new variable and assign it to whichever cell is clicked
     let cell = document.getElementById(`${y}-${x}`);
@@ -111,21 +104,10 @@ function placeInTable(y, x) {
     const newDiv = document.createElement("div");
     newDiv.classList.add("piece");
     newDiv.classList.add('p' + currPlayer);
-    newDiv.id = id;
     cell.append(newDiv);
 
     // HS: update in-memory board 
     board[y][x] = currPlayer;
-
-    const checkForNewDiv = () => !!document.getElementById(id)
-
-    while (!checkForNewDiv()) {
-      await sleep()
-    }
-
-    resolve();
-
-  })
 }
 
 /** endGame: announce game end */
@@ -134,7 +116,7 @@ function placeInTable(y, x) {
 
 /** handleClick: handle click of column top to play piece */
 
-async function handleClick(evt) {
+function handleClick(evt) {
   // get x from ID of clicked cell
   let x = +evt.target.id;
 
@@ -146,7 +128,7 @@ async function handleClick(evt) {
 
   // place piece in board and add to HTML table
   // TODO: add line to update in-memory board
-  await placeInTable(y, x);
+  placeInTable(y, x);
 
 
   // check for win
@@ -244,7 +226,7 @@ function checkForWin() {
 
 function endGame(msg) {
   // TODO: pop up alert message
-  setTimeout(() => alert(msg), 0);
+  setTimeout(() => alert(msg), 100);
 }
 
 // HS: add a function to highlight whichever cells are four in a row when a player wins
